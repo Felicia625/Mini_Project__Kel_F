@@ -1,15 +1,20 @@
 package com.example.mini_project
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mini_project.model.PokemonModel
 import com.example.mini_project.model.PokemonType
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+
     private val recyclerView: RecyclerView by lazy {
         findViewById(R.id.pokemon_recycler)
     }
@@ -18,14 +23,53 @@ class MainActivity : AppCompatActivity() {
         PokemonAdapter(layoutInflater, GlideImageLoader(this))
     }
 
+    var isGrid = false
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        return when(item.itemId){
+            R.id.action_toggle->{
+                toggleLayout(item)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun toggleLayout(item: MenuItem){
+        isGrid = !isGrid
+        pokemonAdapter.isGridMode = isGrid
+        recyclerView.layoutManager = if(isGrid) GridLayoutManager(this, 2) else LinearLayoutManager(this)
+        recyclerView.adapter = pokemonAdapter
+
+        if(isGrid) {
+            item.setIcon(R.drawable.view_list_24px)
+        }else{
+            item.setIcon(R.drawable.baseline_grid_view_24)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        recyclerView.adapter = pokemonAdapter
+        val fab: FloatingActionButton = findViewById(R.id.fab)
 
+        recyclerView.adapter = pokemonAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        fab.setOnClickListener{
+            isGrid = !isGrid
+            pokemonAdapter.isGridMode = isGrid
+            recyclerView.layoutManager = if(isGrid) GridLayoutManager(this, 2) else LinearLayoutManager(this)
+
+
+        }
 
         pokemonAdapter.setData(
             listOf(
@@ -109,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val itemTouchHelper = ItemTouchHelper(pokemonAdapter.swipteToDeleteCallback)
+        val itemTouchHelper = ItemTouchHelper(pokemonAdapter.swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }

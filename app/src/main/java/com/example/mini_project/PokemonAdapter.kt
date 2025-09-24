@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 class PokemonAdapter(private val layoutInflater: LayoutInflater, private val imageLoader: ImageLoader) : RecyclerView.Adapter<PokemonViewHolder>() {
     private val pokemons = mutableListOf<PokemonModel>()
-
-    val swipteToDeleteCallback = SwipeDeleteCallback()
+    val swipeToDeleteCallback = SwipeDeleteCallback()
 
     fun setData(newPokemons: List<PokemonModel>){
         pokemons.clear()
@@ -23,14 +22,24 @@ class PokemonAdapter(private val layoutInflater: LayoutInflater, private val ima
         notifyItemRemoved(position)
     }
 
+    var isGridMode: Boolean =false
+    override fun getItemViewType(position: Int): Int {
+        return if(isGridMode) 1 else 0
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val containerView = layoutInflater.inflate(R.layout.pokemon_list, parent, false)
+        val layout = if(viewType == 1){
+            R.layout.pokemon_grid_item
+        }else{
+            R.layout.pokemon_list
+        }
+        val containerView = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return PokemonViewHolder(containerView, imageLoader)
     }
 
     override fun getItemCount() = pokemons.size
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        holder.bindData(pokemons[position])
+        holder.bindData(pokemons[position], isGridMode)
     }
 
     inner class SwipeDeleteCallback : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){

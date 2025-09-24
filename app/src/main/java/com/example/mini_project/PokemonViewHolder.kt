@@ -5,9 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mini_project.model.PokemonModel
-import com.example.mini_project.R
 import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -30,23 +28,26 @@ class PokemonViewHolder(private val containerView: View, private val imageLoader
         containerView.findViewById(R.id.pokemon_description)
     }
 
-    fun bindData(pokemon: PokemonModel) {
-        imageLoader.loadImage(pokemon.imageUrl, pokemonImageView)
+    fun bindData(pokemon: PokemonModel, isGridMode: Boolean = false) {
+
+        pokemonImageView.let{ imageLoader.loadImage(pokemon.imageUrl, it) }
         pokemonNameView.text = pokemon.name
         pokedexIdView.text = pokemon.pokedexId
-        pokemonDescriptionView.text = pokemon.description
 
-        pokemonTypeContainer.removeAllViews()
-        for(type in pokemon.type){
-            val typeView = LayoutInflater.from(containerView.context)
-                .inflate(R.layout.bg_type, pokemonTypeContainer, false) as CardView
+        if(!isGridMode){
+            pokemonDescriptionView.text = pokemon.description
+            pokemonTypeContainer.removeAllViews()
+            for(type in pokemon.type) {
+                val typeView = LayoutInflater.from(containerView.context)
+                    .inflate(R.layout.bg_type, pokemonTypeContainer, false) as CardView
 
-            val textView = typeView.findViewById<TextView>(R.id.pokemon_type)
-            textView.text = type.name
+                val textView = typeView.findViewById<TextView>(R.id.pokemon_type)
+                textView.text = type.name
 
-            typeView.setCardBackgroundColor(getTypeColor(type))
+                typeView.setCardBackgroundColor(getTypeColor(type))
 
-            pokemonTypeContainer.addView(typeView)
+                pokemonTypeContainer.addView(typeView)
+            }
         }
     }
 
