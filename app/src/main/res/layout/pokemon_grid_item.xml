@@ -39,6 +39,14 @@
             android:textStyle="bold"
             android:textSize="16sp"
             tools:text="Pikachu"/>
+
+        <LinearLayout
+            android:id="@+id/pokemon_type_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            tools:text="type"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

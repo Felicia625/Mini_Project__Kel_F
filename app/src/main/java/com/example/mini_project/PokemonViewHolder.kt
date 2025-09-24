@@ -34,20 +34,22 @@ class PokemonViewHolder(private val containerView: View, private val imageLoader
         pokemonNameView.text = pokemon.name
         pokedexIdView.text = pokemon.pokedexId
 
+        pokemonTypeContainer.removeAllViews()
+        for(type in pokemon.type) {
+            val typeView = LayoutInflater.from(containerView.context)
+                .inflate(R.layout.bg_type, pokemonTypeContainer, false) as CardView
+
+            val textView = typeView.findViewById<TextView>(R.id.pokemon_type)
+            textView.text = type.name
+
+            typeView.setCardBackgroundColor(getTypeColor(type))
+
+            pokemonTypeContainer.addView(typeView)
+        }
+
         if(!isGridMode){
             pokemonDescriptionView.text = pokemon.description
-            pokemonTypeContainer.removeAllViews()
-            for(type in pokemon.type) {
-                val typeView = LayoutInflater.from(containerView.context)
-                    .inflate(R.layout.bg_type, pokemonTypeContainer, false) as CardView
 
-                val textView = typeView.findViewById<TextView>(R.id.pokemon_type)
-                textView.text = type.name
-
-                typeView.setCardBackgroundColor(getTypeColor(type))
-
-                pokemonTypeContainer.addView(typeView)
-            }
         }
     }
 
