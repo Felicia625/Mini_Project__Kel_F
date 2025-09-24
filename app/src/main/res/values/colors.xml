@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="normal">#9FA19F</color>
+    <color name="psychic">#EF4179</color>
+    <color name="water">#2980EF</color>
+    <color name="steel">#60A1B8</color>
+    <color name="ground">#915121</color>
+    <color name="grass">#3FA129</color>
+    <color name="electric">#FAC000</color>
 </resources>

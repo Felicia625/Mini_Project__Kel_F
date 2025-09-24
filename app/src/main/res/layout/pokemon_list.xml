@@ -32,20 +32,20 @@
             app:layout_constraintStart_toEndOf="@+id/pokedex_id"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Pokemon Name" />
-        <TextView
-            android:id="@+id/pokemon_type"
+        <LinearLayout
+            android:id="@+id/pokemon_type_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/pokemon_name"
             app:layout_constraintTop_toBottomOf="@+id/pokemon_name"
-            tools:text="Pokemon Type" />
+            android:layout_marginTop="4dp"/>
         <TextView
             android:id="@+id/pokemon_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/pokemon_type"
-            app:layout_constraintTop_toBottomOf="@+id/pokemon_type"
+            app:layout_constraintStart_toStartOf="@+id/pokemon_type_container"
+            app:layout_constraintTop_toBottomOf="@+id/pokemon_type_container"
             tools:text="Pokemon Description" />
         <ImageView
             android:id="@+id/pokemon_image"
