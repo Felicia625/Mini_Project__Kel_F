@@ -5,5 +5,6 @@ data class PokemonModel(
     val name: String,
     val type: List<PokemonType>,
     val description: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val description_detail: String // Added new field
 )
