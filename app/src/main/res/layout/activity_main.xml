@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/navy"
+            android:background="@color/purple"
             app:titleTextColor="@color/white"
             />
 
